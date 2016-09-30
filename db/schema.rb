@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922154639) do
+ActiveRecord::Schema.define(version: 20160930204719) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.integer  "user_id"
@@ -22,6 +22,21 @@ ActiveRecord::Schema.define(version: 20160922154639) do
     t.datetime "logged_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "handraise_questions", force: :cascade do |t|
+    t.integer  "learn_id"
+    t.datetime "asked_at"
+    t.datetime "resolved_at"
+    t.integer  "asked_by_learn_id"
+    t.string   "asked_by_github_username"
+    t.string   "asked_by_email"
+    t.text     "content"
+    t.integer  "track_id"
+    t.integer  "batch_id"
+    t.integer  "lesson_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "schedules", force: :cascade do |t|
