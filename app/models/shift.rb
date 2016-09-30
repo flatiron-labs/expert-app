@@ -1,8 +1,8 @@
 class Shift < ActiveRecord::Base
 
-  has_many :expert_shifts
-  has_many :users, through: :expert_shifts
+  has_many :schedules
+  has_many :users, through: :schedules
 
-  
+  validates :start_time, :end_time, presence: true
 
 end
