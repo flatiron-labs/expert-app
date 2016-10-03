@@ -10,6 +10,7 @@ module ExpertApp
   class Application < Rails::Application
 
     config.autoload_paths += Dir[Rails.root.join('app', 'adapters')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'services')]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
