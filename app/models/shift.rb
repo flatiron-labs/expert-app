@@ -24,13 +24,16 @@ class Shift < ActiveRecord::Base
   end
 
   def self.shift_by_hour(hour)
-    binding.pry
-    where("start_time <= #{hour} AND end_time >= #{(Time.parse(hour) + 1.hour).to_s(:db)}")
+    # et_hour = DateTime.parse(hour).in_time_zone('Eastern Time (US & Canada)')
+    # where("start_time <= '#{et_hour}' AND end_time >= '#{(et_hour + 1.hour)}'").first
+
+    utc_hour = DateTime.parse(hour)
+    where("start_time <= '#{utc_hour}' AND end_time >= '#{(utc_hour + 1.hour)}'").first
   end
 
   def self.load_by_hour(hour)
     shift = shift_by_hour(hour)
-    shift ? shift.count : 0
+    shift ? shift.users.count : 0
   end
 
 end
