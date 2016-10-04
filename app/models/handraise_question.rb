@@ -9,11 +9,12 @@ class HandraiseQuestion < ActiveRecord::Base
       WHERE asked_at >= $1
         AND asked_at <= $2
       GROUP BY hourly
+      ORDER BY hourly
     SQL
 
     connection = ActiveRecord::Base.connection.raw_connection
     results = connection.exec_params(sql, [start_date, end_date])
-    
+
     results.to_a
   end
 

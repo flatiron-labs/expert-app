@@ -3,8 +3,14 @@ class QuestionShiftService
   attr_reader :start_date, :end_date
 
   def initialize(start_date, end_date)
-    @start_date = start_date
-    @end_date = end_date
+    @start_date = convert_date_to_utc(start_date)
+    @end_date =convert_date_to_utc(end_date)
+  end
+
+  def convert_date_to_utc(date)
+    (DateTime.parse(date) + 10.hours)
+      .in_time_zone('Eastern Time (US & Canada)')
+      .beginning_of_day.utc.to_s
   end
 
   def shift_load
@@ -13,7 +19,8 @@ class QuestionShiftService
     hrq_load.each_with_object({}) do |question_hour, export_hash|
       time = question_hour["hourly"]
       expert_load = Shift.load_by_hour(time)
-      export_hash[time] = {experts_on: expert_load, q_count: question_hour["q_count"]}
+      time_et = DateTime.parse(time).in_time_zone('Eastern Time (US & Canada)').strftime('%Y-%m-%d-%H:00')
+      export_hash[time_et] = {experts_on: expert_load, q_count: question_hour["q_count"]}
     end
   end
 
