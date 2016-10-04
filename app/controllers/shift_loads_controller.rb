@@ -4,4 +4,8 @@ class ShiftLoadsController < ApplicationController
 
   end
 
+  def data
+
+  end
+
 end
