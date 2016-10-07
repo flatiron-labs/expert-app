@@ -10,15 +10,49 @@ let handelFormSubmission = () => {
   let body = {start_date: start_date, end_date: end_date}
   fetch(`/shift_loads_data?start_date=${start_date}&end_date=${end_date}`)
     .then(res => {
-      debugger;
       return res.json()
     })
     .then((json) =>{
-      debugger;
+      createExpertLoadChat(json.labels, json.experts_on, json.q_count);
     })
     .catch(error => {
-      debugger;
+      console.alert('Something has gone wrong. And not in a good way.')
     })
+}
+
+let createExpertLoadChat = (labels, experts_on, q_count) => {
+  let ctx = document.getElementById("myChart");
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            type: 'bar',
+            label: '# of Experts On',
+            data: experts_on,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1
+        },
+        {
+            type: 'line',
+            label: '# of Qs Asked',
+            data: q_count,
+            backgroundColor: 'rgba(31, 192, 250, 0.2)',
+            borderColor: 'rgba(31, 192, 250, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
 }
 
 let attachListenerToDatePicker = () => {
