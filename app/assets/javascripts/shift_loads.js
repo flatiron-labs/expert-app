@@ -16,11 +16,24 @@ let handelFormSubmission = () => {
       createExpertLoadChat(json.labels, json.experts_on, json.q_count);
     })
     .catch(error => {
-      console.alert('Something has gone wrong. And not in a good way.')
+      alert('Something has gone wrong. And not in a good way.')
     })
 }
 
+let resetChart = () =>{
+  let oldResults = document.getElementById("myChart");
+  let resultsContainer = document.getElementById("results-graph")
+  if (oldResults != undefined) {oldResults.remove()}
+
+  resultsContainer.innerHTML = '<canvas id="myChart" width="400" height="200"></canvas>';
+}
+
 let createExpertLoadChat = (labels, experts_on, q_count) => {
+
+  resetChart();
+
+  console.log('chart did clear')
+
   let ctx = document.getElementById("myChart");
   let myChart = new Chart(ctx, {
     type: 'bar',
@@ -52,7 +65,7 @@ let createExpertLoadChat = (labels, experts_on, q_count) => {
             }]
         }
     }
-});
+  });
 }
 
 let attachListenerToDatePicker = () => {
