@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get '/shift_loads_data' => 'shift_loads#data'
 
+  get '/' => 'shift_loads#root'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

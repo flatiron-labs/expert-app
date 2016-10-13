@@ -1,5 +1,9 @@
 class ShiftLoadsController < ApplicationController
 
+  def root
+    redirect_to '/shift_loads'
+  end
+
   def index
 
   end
