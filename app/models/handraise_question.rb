@@ -1,5 +1,7 @@
 class HandraiseQuestion < ActiveRecord::Base
 
+  validates :learn_id, uniqueness: true
+
   def self.date_range_count(start_date, end_date)
     sql = <<-SQL
       SELECT
