@@ -2,6 +2,47 @@ class HandraiseQuestion < ActiveRecord::Base
 
   validates :learn_id, uniqueness: true
 
+  default_scope { where(batch_id: SUPPORTED_BATCHES) }
+
+  SUPPORTED_BATCHES = [
+    # q-000
+    286,
+    # v-000
+    306,
+    # kwk-000
+    416,
+    # New Html
+    421,
+    # wdf-0 #Robinhood
+    422,
+    # Flatiron labs
+    397,
+    #Welcome to Learn 000
+    436,
+    #Welcome to Learn 001
+    457,
+    #Free js
+    437,
+    #Free js Kwk
+    447,
+    #Free Ruby
+    438,
+    #Free Ruby kwk
+    448,
+    #Javascript Cert
+    439,
+    #Ruby Cert
+    440,
+    #Cert html/css
+    421,
+    #Tech app js
+    441,
+    #Tech app Ruby
+    442,
+    #Bootcamp Prep
+    460
+  ]
+
   def self.date_range_count(start_date, end_date)
     sql = <<-SQL
       SELECT
