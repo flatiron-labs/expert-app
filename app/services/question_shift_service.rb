@@ -20,12 +20,13 @@ class QuestionShiftService
   def shift_load
     hrq_load = HandraiseQuestion.date_range_count(start_date, end_date)
     expert_load = Shift.expert_load(start_date, end_date)
-    hrq_load.each_with_object(blank_export_hash) do |question_hour, export_hash|
-      time = question_hour["hourly"]
+    hours_array.each_with_object(blank_export_hash) do |time, export_hash|
+      # time = question_hour["hourly"]
       expert_load = Shift.load_by_hour(time)
       time_et = DateTime.parse(time).in_time_zone('Eastern Time (US & Canada)').strftime('%Y-%m-%d-%H:00')
-      # export_hash[time_et] = {experts_on: expert_load, q_count: question_hour["q_count"]}
-      add_to_hash(export_hash, time_et, expert_load, question_hour["q_count"])
+      q_count_hash = hrq_load.find {| row | row["hourly"] == time }
+      q_count = q_count_hash ? q_count_hash["q_count"] : 0
+      add_to_hash(export_hash, time_et, expert_load, q_count)
     end
   end
 
@@ -33,6 +34,17 @@ class QuestionShiftService
     export_hash[:labels] << time_in_et
     export_hash[:experts_on] << expert_load
     export_hash[:q_count] << q_count
+  end
+
+  def hours_array
+    current_time = Time.parse(start_date)
+    end_time = Time.parse(end_date)
+    hours_array = []
+    while current_time < end_time
+      hours_array << current_time.to_s(:db)
+      current_time += 1.hours
+    end
+    hours_array
   end
 
 end
