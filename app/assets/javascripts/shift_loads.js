@@ -60,7 +60,8 @@ let createExpertLoadChat = (labels, experts_on, q_count) => {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero:true
+                    beginAtZero:true,
+                    suggestedMax: 18
                 }
             }]
         }
