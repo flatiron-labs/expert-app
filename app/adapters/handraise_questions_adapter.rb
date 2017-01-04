@@ -10,9 +10,9 @@ class HandraiseQuestionsAdapter
 
       last_question_id = csv[-1].to_hash["learn_id"]
 
-      unless HandraiseQuestion.find_by(learn_id: last_question_id)
+      # unless HandraiseQuestion.find_by(learn_id: last_question_id)
         import_csv(csv)
-      end
+      # end
     end
   end
 
