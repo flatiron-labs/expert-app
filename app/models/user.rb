@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :schedules
   has_many :shifts, through: :schedules
+  has_many :feedbacks
 
   # def feedbacks
   def self.find_or_create_by_full_name(full_name)
